@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{% endblock %}
+
+{% block conteudo %}
+    <div class="row">
+        <div class="col-md-6">
+
+            <form class="input-group" action="{% url 'post_busca' %}">
+                <input type="search" class="form-control" name="termo" placeholder="Digite a sua pesquisa" >
+                <span class="form-group input-group-btn">
+                    <button class="btn btn-default" onclick="{% url 'post_busca' %}" type="submit">Pesquisar</button>
+                </span>
+            </form>
+        </div>
+    </div>
+    <br>
+    <div class="row" margin-left="15px">
+        <div class="col-md-6">
+            <div class="panel-head">
+                <p><strong>{{ object_list.count }}</strong> de <strong>{{items}}</strong> itens </p>
+            </div>
+        </div>
+    </div>
+
+    {% for post in object_list %}
+    <div class="row">
+        <div class="col-md-5 ">
+            <div class="panel-body"  >
+            {% if post.imagem_post %}
+                <a href="{{ post.imagem_post.url }}"><img src="{{ post.imagem_post.url }}" class="img-responsive " width="100%" alt=""></a>
+            {% else %}
+                <a href="#"><img src="{% static 'images/logorb.png' %}" class="img-responsive " width="100%" alt=""></a>
+            {% endif %}
+             </div>
+        </div>
+        <div class="col-md-7">
+            <div class="panel-heading">
+                <h2>{{ post.title }}</h2>
+                <p>Tarefa: {{ post.get_tarefa_name }}</p>
+                <p>Localização: {{ post.get_troco_name }}</p>
+                <p>Pk: {{ post.location }}</p>
+                <small>{{ post.data_post }}</small><br>
+                <a href={% url 'post_detail' post.id %}><buton  type="button" class="btn btn-sm btn-info">Ver Mais</buton></a>
+            </div>
+        </div>
+    </div>
+    <hr>
+    {% endfor %}
+
+{% endblock %}
+{% block paginacao %}
+{% include 'parciais/_pagination.html' %}
+{% endblock %}

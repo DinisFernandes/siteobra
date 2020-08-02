@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} | {{object.title}}{% endblock %}
+{% block metafacebook %}
+    <meta property="og:image" content="{{ post.imagem_post.url }}">
+{% endblock %}
+{% block conteudo %}
+
+<div class="panel-heading">
+    <div class="row">
+        <div class="panel-heading">
+            <h2>{{ object.title }}</h2>
+            <p>Tarefa: {{ object.get_tarefa_name }}</p>
+            <p>Localização: {{ object.get_troco_name }}</p>
+            <p>Pk: {{ object.location }}</p>
+            <small>{{ object.data_post }}</small><br>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3 social-buttons">
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}&t={{ object.title }}" class="btn btn-social-icon btn-facebook" target="_blank">
+                <i class="fa fa-facebook"></i>
+            </a>
+            <a href="http://twitter.com/share?text={{ object.title }}&url={{ request.build_absolute_uri }}" class="btn btn-social-icon btn-twitter" target="_blank">
+                <i class="fa fa-twitter"></i>
+            </a>
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ object.title }}" class="btn btn-social-icon btn-linkedin" target="_blank">
+                <i class="fa fa-linkedin"></i>
+            </a>
+            <hr>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 ">
+            {% if post.imagem_post %}
+                <a href="{{ post.imagem_post.url }}"><img src="{{ post.imagem_post.url }}" class="img-responsive " width="100%" alt=""></a>
+            {% else %}
+                <a href="#"><img src="{% static 'images/logorb.png' %}" class="img-responsive " width="100%" alt=""></a>
+            {% endif %}
+        </div>
+        <div class="col-md-6 ">
+            <div id="map" style="width:100%;height:400px"></div>
+            <script>
+            var lat = "{{ object.latitude }}"
+            var latt = lat.replace(",",".");
+            var lng = "{{ object.longitude }}"
+            var lngg = lng.replace(",",".");
+            function myMap() {
+              var myCenter = new google.maps.LatLng(latt, lngg);
+              var mapCanvas = document.getElementById("map");
+              var mapOptions = {center: myCenter, zoom: 16};
+              var map = new google.maps.Map(mapCanvas, mapOptions);
+              var marker = new google.maps.Marker({position:myCenter});
+              marker.setMap(map);
+            }
+            </script>
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMSll9NQQ2DO1OK6hsIVlfAGrB2thf_Hw&callback=myMap"></script>
+        </div>
+    </div>
+</div>
+<div class="panel-body">
+    <hr>
+    <p>{{ object.content }}</p>
+</div>
+{% endblock %}
