@@ -24,7 +24,6 @@ class PostList(ListView):
 class PostDetail(DetailView):
     model = Post
 
-
 class PostBusca(PostList):
     num= 0
     template_name = 'website/post_busca.html'
