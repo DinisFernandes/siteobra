@@ -25,7 +25,9 @@ SECRET_KEY = 'dx2e!+$7!dax+e!f43936w8r7lc7a$2efa=u$1&)19hb(v%agv'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['www.arquivoobra.ga', 'arquivoobra.ga',
+                 'localhost', '127.0.0.1'
+                 ]
 
 
 # Application definition
